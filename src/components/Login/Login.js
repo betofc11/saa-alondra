@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './Login.css';
 import { Navigate } from 'react-router-dom';
-import token_helper from "../../helpers/token_helper";
+import {verifyLogged} from "../../helpers/token_helper";
 const config = require('../../config.json');
 const axios = require('axios');
 
@@ -29,7 +29,7 @@ class Login extends Component {
         })
     }
     async checkLoginStatus() {
-        const isl = await token_helper.verifyLogged();
+        const isl = await verifyLogged();
         isl ? this.setState({islogged: true}) : this.setState({islogged: false})
     }
     componentDidMount() {
