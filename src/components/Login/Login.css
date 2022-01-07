@@ -1,0 +1,36 @@
+:root{
+    --lila: rgb(68, 68, 88);
+    --gris: rgba(42, 42, 42, 0.794);
+}
+
+.title{
+    font-family: 'Bungee';
+    color: white;
+    text-shadow: 2px 2px 20px rgb(0, 0, 0);
+    margin: 30px 5px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.card{
+    color: white;
+    border-radius: 12px;
+    background-color: var(--gris);
+    width: 350px;
+    padding: 5px 5px;
+    box-shadow: 3px 3px 15px 1px rgb(0, 0, 0);
+}
+
+.logo{
+    margin: 10px 5px;
+}
+
+.form-control{
+    margin: 7px 0 0 0;
+}
