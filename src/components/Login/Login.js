@@ -29,10 +29,14 @@ class Login extends Component {
         })
     }
     async checkLoginStatus() {
-        const isl = await verifyLogged();
-        isl ? this.setState({islogged: true}) : this.setState({islogged: false})
+        verifyLogged().then((res) =>{
+            res ? this.setState({islogged: true}) : this.setState({islogged: false})
+        }).catch(err => {
+            console.log(err.message);
+        });
+        
     }
-    componentDidMount() {
+    componentDidMount () {
         this.checkLoginStatus();
     }
     render() {
@@ -46,8 +50,8 @@ class Login extends Component {
                         <h2 className="card-header">Iniciar sesion</h2>
                         <div className="card-body">
                             <div className="">
-                                <input type="text" name="user" className="form-control" placeholder="Usuario" />
-                                <input type="password" name="pass" className="form-control" placeholder="Contraseña" autocomplete="on"/>
+                                <input type="text" name="user" className="form-control" placeholder="Usuario" autoComplete="username"/>
+                                <input type="password" name="pass" className="form-control" placeholder="Contraseña" autoComplete="current-password"/>
                             </div>
                         </div>
                         <div className="card-footer">

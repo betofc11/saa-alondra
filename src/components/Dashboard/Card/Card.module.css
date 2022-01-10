@@ -1,0 +1,29 @@
+.card{
+    display: flex;
+    width: 200px;
+    height: 200px;
+    flex-wrap: wrap;
+    margin: 10px 10px;
+    transition: 1s ease;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}
+.cardtexto{
+    font-size: 20px;
+    font-weight: bold;
+    word-wrap: break-word;
+}
+
+.link{
+    text-decoration: none;
+}
+
+.link:hover{
+    text-decoration: none;
+}
+
+.card:hover{
+    transform: scale(1.05);
+    box-shadow: 5px 5px 25px black;
+}

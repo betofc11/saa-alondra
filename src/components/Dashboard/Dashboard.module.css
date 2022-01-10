@@ -1,0 +1,8 @@
+
+.grupo{
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    flex-direction: row;
+    justify-content: center;
+}
