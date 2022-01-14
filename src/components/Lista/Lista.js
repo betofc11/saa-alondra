@@ -1,20 +1,24 @@
 import { React, Component } from 'react';
-import style from './Dashboard.module.css';
+import style from './Lista.module.css';
 import { Navigate } from 'react-router-dom';
 import regionesServices from '../../services/regionesServices';
 import Card from './Card/Card';
+import Navbar from '../NavBar/Navbar';
+import Loader from '../Utilities/Loader';
 const { verifyLogged } = require('../../helpers/token_helper');
 const axios = require('axios');
 
 
 
-class Dashboard extends Component {
+class Lista extends Component {
     constructor() {
         super();
         this.state = {
             username: '',
             islogged: true,
-            regiones: []
+            regiones: [],
+            ubicacion: 'Listas',
+            loader: true
         };
     }
 
@@ -39,12 +43,12 @@ class Dashboard extends Component {
             this.islogged().then(res => {
                 console.log(res)
                 res ? console.log("ESTA LOGUEADO") : this.setState({ islogged: res });
-                if(this.state.regiones.length === 0){
-                    regionesServices.getRegions().then((res) =>{
-                    this.setState({ regiones: JSON.parse(res) });
-                    console.log(res);
-                })
-            };
+                if (this.state.regiones.length === 0) {
+                    regionesServices.getRegions().then((res) => {
+                        this.setState({ regiones: JSON.parse(res), loader: false });
+                        console.log(res);
+                    })
+                };
             });
         } catch (e) {
             console.error(e.message)
@@ -76,23 +80,25 @@ class Dashboard extends Component {
 
     render() {
         return this.state.islogged ? (
-            <div className="container">
-                <h1 className="title">DASHBOARD</h1>
-                <button type="button" className="btn btn-danger" onClick={this.logOutHandler}>
-                    LOGOUT
-                </button>
-                <div className={style.grupo}>
+            <div>
+                <Navbar user= {this.state}/>
+                <div className={"container " + style.cuerpo}>
                     {
-                        this.state.regiones.map((region) => {
-                            return (
-                                <Card region={region} />
-                            )
-                        })
+                        this.state.loader ? <Loader />: <span></span>
                     }
+                    <div className={style.grupo}>
+                        {
+                            this.state.regiones.map((region) => {
+                                return (
+                                    <Card key={region.idregion} region={region} />
+                                )
+                            })
+                        }
+                    </div>
                 </div>
             </div>
         ) : <Navigate to="/login" />;
     }
 }
 
-export default Dashboard;
+export default Lista;

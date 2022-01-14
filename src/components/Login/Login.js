@@ -2,18 +2,26 @@ import React, { Component } from "react";
 import './Login.css';
 import { Navigate } from 'react-router-dom';
 import {verifyLogged} from "../../helpers/token_helper";
+import Loader from '../Utilities/Loader';
 const config = require('../../config.json');
 const axios = require('axios');
+
+
 
 class Login extends Component {
 
     state = {
         username: '',
         password: '',
-        islogged: false
+        islogged: false,
+        loader: false
     }
     submitHandler = (event) => {
         event.preventDefault();
+        this.setState({
+            loader: true
+        });
+        console.log(this.state.loader)
         const user = event.target.user.value.trim();
         const pass = event.target.pass.value.trim();
         this.setState({ username: user, password: pass });
@@ -28,6 +36,8 @@ class Login extends Component {
             console.log(err);
         })
     }
+
+
     async checkLoginStatus() {
         verifyLogged().then((res) =>{
             res ? this.setState({islogged: true}) : this.setState({islogged: false})
@@ -42,6 +52,9 @@ class Login extends Component {
     render() {
         return !this.state.islogged ? (
             <div className="container h-100">
+                {
+                    this.state.loader ? <Loader /> : <div></div>
+                }
                 <div>
                     <h1 className="title">SAA Alondra</h1>
                 </div>
@@ -60,7 +73,7 @@ class Login extends Component {
                     </form>
                 </div>
             </div>
-        ) : <Navigate to="/dashboard" replace/>
+        ) : <Navigate to="/" replace/>
     }
 }
 

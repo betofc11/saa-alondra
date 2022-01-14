@@ -9,6 +9,17 @@ module.exports = {
         }catch (e) {
             console.log(e.message)
         }
+    },
+    getRegionById: async (id) =>{
+        try {
+            const region = await axios.get(config.URL_API + `regiones/${id}`);
+            const vecinos = await axios.get(config.URL_API + `vecinos/getByRegion/${id}`);
+            region.data.vecinos = vecinos.data;
+            console.log(region.data)
+            return JSON.stringify(region.data)
+        } catch (e) {
+            console.log(e.message)
+        }
     }
 }
 

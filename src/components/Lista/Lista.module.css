@@ -1,0 +1,17 @@
+*{
+    font-family: 'Roboto';
+}
+.grupo{
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.cuerpo{
+    margin: auto;
+    margin-top: 50px;
+    justify-content: center;
+}

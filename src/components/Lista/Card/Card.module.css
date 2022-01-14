@@ -4,7 +4,7 @@
     height: 200px;
     flex-wrap: wrap;
     margin: 10px 10px;
-    transition: 1s ease;
+    transition: 0.7s ease;
     flex-grow: 1;
     align-items: center;
     justify-content: center;
@@ -12,6 +12,7 @@
 .cardtexto{
     font-size: 20px;
     font-weight: bold;
+    transition: 1s ease;
     word-wrap: break-word;
 }
 
@@ -25,5 +26,6 @@
 
 .card:hover{
     transform: scale(1.05);
+    background-color: rgb(36, 36, 36);
     box-shadow: 5px 5px 25px black;
 }

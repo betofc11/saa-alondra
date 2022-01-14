@@ -1,0 +1,50 @@
+
+.container{
+    flex-direction: row;
+    align-items: center;
+    box-shadow: 0 20px 15px -16px rgb(46, 46, 46);
+    max-height: 99px;
+    border-radius: 41px;
+}
+
+.user{
+    color: #fff
+}
+
+.user:hover{
+    color: #fff
+}
+
+.logout{
+    display: none;
+    transition: 1s ease;
+    margin:0
+}
+
+.logoutlogo{
+    margin: 4px;
+}
+
+.btndanger{
+    display: inline
+}
+
+.btndanger:hover{
+    display: flex
+}
+
+.btndanger:hover .logout{
+    display: block;
+}
+
+.title{
+    margin: 0;
+    margin-left: 10px;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .logout{
+        display: inline-block;
+    }
+}

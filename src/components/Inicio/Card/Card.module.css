@@ -1,0 +1,46 @@
+.card{
+    display: flex;
+    flex-direction: row;
+    width: 200px;
+    height: auto;
+    flex-wrap: wrap;
+    margin: 10px 10px;
+    transition: 0.7s ease;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}
+.cardtexto{
+    font-size: 20px;
+    font-weight: bold;
+    transition: 1s ease;
+    word-wrap: break-word;
+}
+
+.link{
+    text-decoration: none;
+}
+
+.link:hover{
+    text-decoration: none;
+}
+
+.card:hover{
+    transform: scale(1.05);
+    background-color: rgb(36, 36, 36);
+    box-shadow: 5px 5px 25px black;
+}
+
+.logo{
+    width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .logout{
+        display: inline-block;
+    }
+
+    .card{
+        width: 150px;
+    }
+}
