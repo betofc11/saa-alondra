@@ -4,9 +4,7 @@ const axios = require('axios');
 module.exports = {
     agregaUsuario: async (values) => {
         try {
-            console.log(values);
             const token = JSON.parse(localStorage.getItem('usuarioLogged')).token;
-            console.log(token);
             const bodyParameters = {
                 nombre: values.nombre,
                 primerapellido: values.primerapellido,

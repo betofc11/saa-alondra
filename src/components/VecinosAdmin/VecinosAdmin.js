@@ -1,29 +1,61 @@
 import React, { useEffect, useState } from 'react';
-import style from './UserAdmin.module.css';
+import style from './VecinosAdmin.module.css';
 import * as yup from 'yup';
 import Navbar from '../NavBar/Navbar';
 import { IoPaperPlaneSharp } from "react-icons/io5";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { mixed } from 'yup';
 const {agregaUsuario} = require('../../helpers/usuarios_helper');
+const {getRegions} = require('../../helpers/casas_helper');
 
-const UserAdmin = () => {
+const VecinosAdmin = () => {
 
     const [state, setState] = useState({
-        ubicacion: 'Admin usuarios',
+        ubicacion: 'Admin vecinos',
         nombre: '',
         primerapellido: '',
         segundoapellido: '',
         email: '',
         telefono: '',
-        password: '',
-        passwordConfirmation: '',
-        usuario: '',
-        admin: true
-    })
+        cedula: '',
+        fallecido: false,
+        trabaja: true,
+        fechanac: new Date(),
+        arrayRegionesCasas: [],
+        arrayRegiones: [],
+        arrayCasas: []
+
+    });
+
+    const getFormValues = () =>{
+        let regiones = [];
+        let casas = [];
+        getRegions().then((res) =>{
+            for (let reg in res){
+                regiones.push({
+                    value: res[reg].idregion,
+                    text: res[reg].nombre
+                });
+                for(let cas in res[reg].casa){
+                    casas.push({
+                        region: res[reg].idregion,
+                        value: res[reg].casa[cas].idcasa,
+                        text: res[reg].casa[cas].nombre,
+                    })
+                }
+            }
+            setState({
+                arrayRegionesCasas: res,
+                arrayRegiones: regiones,
+                arrayCasas: casas
+            })
+            console.log(regiones, casas)
+        });
+    }
 
     useEffect(() => {
-
-    })
+        getFormValues();
+    }, [])
 
     const validationSchema = yup.object({
         nombre: yup.string().required('El nombre es necesario'),
@@ -31,10 +63,11 @@ const UserAdmin = () => {
         segundoapellido: yup.string(),
         email: yup.string().email('Debe de ser un correo valido'),
         telefono: yup.string().matches('[0-9]', 'El formato del telefono es incorrecto'),
-        password: yup.string().required('La contraseña es necesaria'),
-        passwordConfirmation: yup.string().required('Es necesario la confirmacion de contraseña').oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden'),
-        usuario: yup.string().required('El usuario es necesario'),
-        admin: yup.boolean().default(true)
+        cedula: yup.string().matches('[0-9]', 'El formato de la cedula es incorrecto'),
+        fallecido: yup.boolean().default(false),
+        trabaja: yup.boolean().default(true),
+        fechanac: yup.date().default(new Date()),
+        idcasa: yup.object().oneOf(state.arrayRegiones),
     });
 
     const renderError = (message) => <p className="alert alert-danger m-2">{message}</p>;
@@ -204,4 +237,4 @@ const UserAdmin = () => {
 
 
 
-export default UserAdmin
+export default VecinosAdmin

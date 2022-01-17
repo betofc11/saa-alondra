@@ -7,6 +7,7 @@ import Casas from './components/Casas/Casas';
 import Lista from './components/Lista/Lista';
 import Inicio from './components/Inicio/Inicio';
 import UserAdmin from './components/UserAdmin/UserAdmin';
+import VecinosAdmin from './components/VecinosAdmin/VecinosAdmin';
 
 
 
@@ -21,7 +22,8 @@ const App = () => {
           <Route path='/casas' element={<Casas/>} />
           <Route path='/lista' element={<Lista/>} />
           <Route path='/adminusuarios' element={<UserAdmin/>} />
-          <Route path='*' />
+          <Route path='/adminvecinos' element={<VecinosAdmin/>} />
+          <Route path='*' element='/'/>
         </Routes>
       </Router>
     </div>
