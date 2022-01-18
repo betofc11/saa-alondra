@@ -1,8 +1,7 @@
 const config = require('../config.json');
 const axios = require('axios');
 
-module.exports = {
-    agregaUsuario: async (values) => {
+const agregaUsuario = async (values) => {
         try {
             const token = JSON.parse(localStorage.getItem('usuarioLogged')).token;
             const bodyParameters = {
@@ -32,4 +31,5 @@ module.exports = {
         }
 
     }
-}
+
+export { agregaUsuario }
