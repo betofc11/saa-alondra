@@ -1,8 +1,7 @@
 const config = require('../config.json');
 const axios = require('axios');
 
-module.exports = {
-    verifyLogged: async () => {
+const verifyLogged = async () => {
         try {
             if(localStorage.getItem('usuarioLogged') != null ){
             const token = JSON.parse(localStorage.getItem('usuarioLogged')).token;
@@ -23,4 +22,5 @@ module.exports = {
         }
 
     }
-}
+
+export { verifyLogged }
