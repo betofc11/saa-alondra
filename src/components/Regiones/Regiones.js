@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Navbar from '../NavBar/Navbar';
 import DataTable from 'react-data-table-component';
 import styles from './Regiones.module.css';
-import { getRegionById } from'../../services/regionesServices';
+import RegionesServices from '../../services/regionesServices';
 
 
 const Regiones = () => {
@@ -77,7 +77,7 @@ const Regiones = () => {
     ];
 
     useEffect(() =>{
-        getRegionById(parseInt(id)).then((res) =>{
+        RegionesServices.getRegionById(parseInt(id)).then((res) =>{
             const resjson = JSON.parse(res);
             setRegion({
                 idregion: resjson.idregion,
