@@ -1,7 +1,7 @@
 import { React, Component } from 'react';
 import style from './Lista.module.css';
 import { Navigate } from 'react-router-dom';
-import getRegions from '../../services/regionesServices';
+import {getRegions} from '../../services/regionesServices';
 import Card from './Card/Card';
 import Navbar from '../NavBar/Navbar';
 import Loader from '../Utilities/Loader';
