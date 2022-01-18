@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Navbar from '../NavBar/Navbar';
 import DataTable from 'react-data-table-component';
 import styles from './Regiones.module.css';
-const  getRegionById = require('../../services/regionesServices');
+import getRegionById from'../../services/regionesServices';
 
 
 const Regiones = () => {
