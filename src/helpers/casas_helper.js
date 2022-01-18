@@ -1,8 +1,7 @@
 const config = require('../config.json');
 const axios = require('axios');
 
-module.exports = {
-    getCasasByRegion: async () => {
+const getCasasByRegion = async () => {
         try {
             if (localStorage.getItem('usuarioLogged') != null) {
                 const token = JSON.parse(localStorage.getItem('usuarioLogged')).token;
@@ -22,8 +21,8 @@ module.exports = {
             return false;
         }
 
-    },
-    getRegions: async () => {
+    }
+    const getRegions = async () => {
         try {
             const token = JSON.parse(localStorage.getItem('usuarioLogged')).token;
             const authorization = {
@@ -38,4 +37,5 @@ module.exports = {
 
         }
     }
-}
+
+export { getRegions, getCasasByRegion }
