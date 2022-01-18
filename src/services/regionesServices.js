@@ -3,7 +3,7 @@ const config = require('../config.json');
 
 
 
-module.exports.getRegions = async () => {
+const getRegions = async () => {
     try {
         const regions = await axios.get(config.URL_API + "regiones");
         return JSON.stringify(regions.data);
@@ -11,7 +11,7 @@ module.exports.getRegions = async () => {
         console.log(e.message)
     }
 }
-module.exports.getRegionById = async (id) => {
+const getRegionById = async (id) => {
     try {
         const region = await axios.get(config.URL_API + `regiones/${id}`);
         const vecinos = await axios.get(config.URL_API + `vecinos/getByRegion/${id}`);
@@ -23,7 +23,7 @@ module.exports.getRegionById = async (id) => {
     }
 }
 
-
+export { getRegions, getRegionById }
 
 
 
