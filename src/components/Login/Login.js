@@ -14,14 +14,16 @@ class Login extends Component {
         username: '',
         password: '',
         islogged: false,
-        loader: false
+        loader: false,
+        error: false
     }
+
     submitHandler = (event) => {
         event.preventDefault();
         this.setState({
+            ...this.state,
             loader: true
         });
-        console.log(this.state.loader)
         const user = event.target.user.value.trim();
         const pass = event.target.pass.value.trim();
         this.setState({ username: user, password: pass });
@@ -31,8 +33,17 @@ class Login extends Component {
         }).then(res => {
             console.log('IsLoogedIn:', !!res.data)
             localStorage.setItem('usuarioLogged', JSON.stringify(res.data));
-            this.setState({islogged: true});
+            this.setState({
+                ...this.state,
+                islogged: true
+            });
         }).catch(err => {
+            this.setState({
+                ...this.state,
+                islogged: false,
+                loader:false,
+                error: true
+            })
             console.log(err);
         })
     }
@@ -67,6 +78,15 @@ class Login extends Component {
                                 <input type="password" name="pass" className="form-control" placeholder="Contraseña" autoComplete="current-password"/>
                             </div>
                         </div>
+                        
+                {
+                    this.state.error
+                    ?
+                    <div className={`alert alert-danger mx-3`}>
+                        Credenciales incorrectas
+                    </div>
+                    : <p></p>
+                }
                         <div className="card-footer">
                             <button type="submit" className="btn btn-success"> INICIAR SESION</button>
                         </div>
