@@ -1,20 +1,15 @@
-import React, { useState } from 'react';
-import styles from './Loader.module.css';
-import image from './img/spider.gif';
+import React, { useState } from 'react'
+import styles from './Loader.module.css'
+import image from './img/spider.gif'
 
+const Loader = () => {
+  const style = styles.loader + ' ' + styles.show
 
-const Loader = () =>{
-
-    const style =  styles.loader + ' ' + styles.show;
-    
-
-    return (
+  return (
         <div className={style}>
             <img src={image} alt="Loading" />
         </div>
-    )
+  )
 }
-
-
 
 export default Loader

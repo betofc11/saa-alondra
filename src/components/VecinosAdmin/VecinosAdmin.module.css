@@ -51,3 +51,9 @@
 .subtitle{
     font-size: 22px;
 }
+
+.campos{
+    background: whitesmoke;
+    border-radius: 7px;
+    padding: 0px 20;
+}

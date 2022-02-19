@@ -1,12 +1,11 @@
-import React from 'react';
+import React from 'react'
 
 const Casas = () => {
-    return (
+  return (
         <div>
             <h1>ESTE ES EL DE CASAS</h1>
         </div>
-    );
+  )
 }
 
-
-export default Casas;
+export default Casas

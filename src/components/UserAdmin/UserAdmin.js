@@ -1,65 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import style from './UserAdmin.module.css';
-import * as yup from 'yup';
-import Navbar from '../NavBar/Navbar';
-import { IoPaperPlaneSharp } from "react-icons/io5";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-const {agregaUsuario} = require('../../helpers/usuarios_helper');
+import React, { useEffect, useState } from 'react'
+import style from './UserAdmin.module.css'
+import * as yup from 'yup'
+import Navbar from '../NavBar/Navbar'
+import { IoPaperPlaneSharp } from 'react-icons/io5'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+const { agregaUsuario } = require('../../helpers/usuarios_helper')
 
 const UserAdmin = () => {
+  const [state, setState] = useState({
+    ubicacion: 'Admin usuarios',
+    nombre: '',
+    primerapellido: '',
+    segundoapellido: '',
+    email: '',
+    telefono: '',
+    password: '',
+    passwordConfirmation: '',
+    usuario: '',
+    admin: true
+  })
 
-    const [state, setState] = useState({
-        ubicacion: 'Admin usuarios',
-        nombre: '',
-        primerapellido: '',
-        segundoapellido: '',
-        email: '',
-        telefono: '',
-        password: '',
-        passwordConfirmation: '',
-        usuario: '',
-        admin: true
+  useEffect(() => {
+
+  })
+
+  const validationSchema = yup.object({
+    nombre: yup.string().required('El nombre es necesario'),
+    primerapellido: yup.string().required('El primer apellido es necesario'),
+    segundoapellido: yup.string(),
+    email: yup.string().email('Debe de ser un correo valido'),
+    telefono: yup.string().matches('[0-9]', 'El formato del telefono es incorrecto'),
+    password: yup.string().required('La contraseña es necesaria'),
+    passwordConfirmation: yup.string().required('Es necesario la confirmacion de contraseña').oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden'),
+    usuario: yup.string().required('El usuario es necesario'),
+    admin: yup.boolean().default(true)
+  })
+
+  const renderError = (message) => <p className="alert alert-danger m-2">{message}</p>
+
+  const onSubmit = async (values) => {
+    validationSchema.isValid({
+      nombre: values.nombre,
+      primerapellido: values.primerapellido,
+      segundoapellido: values.segundoapellido,
+      email: values.email,
+      telefono: values.telefono,
+      password: values.password,
+      passwordConfirmation: values.passwordConfirmation,
+      usuario: values.usuario,
+      admin: values.admin
+    }).then(res => {
+      if (res) {
+        const a = agregaUsuario(values).then(res => console.log(res))
+        console.log(a)
+      }
     })
+    console.log(values)
+  }
 
-    useEffect(() => {
-
-    })
-
-    const validationSchema = yup.object({
-        nombre: yup.string().required('El nombre es necesario'),
-        primerapellido: yup.string().required('El primer apellido es necesario'),
-        segundoapellido: yup.string(),
-        email: yup.string().email('Debe de ser un correo valido'),
-        telefono: yup.string().matches('[0-9]', 'El formato del telefono es incorrecto'),
-        password: yup.string().required('La contraseña es necesaria'),
-        passwordConfirmation: yup.string().required('Es necesario la confirmacion de contraseña').oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden'),
-        usuario: yup.string().required('El usuario es necesario'),
-        admin: yup.boolean().default(true)
-    });
-
-    const renderError = (message) => <p className="alert alert-danger m-2">{message}</p>;
-
-    const onSubmit = async (values) => {
-        validationSchema.isValid({
-            nombre: values.nombre,
-            primerapellido: values.primerapellido,
-            segundoapellido: values.segundoapellido,
-            email: values.email,
-            telefono: values.telefono,
-            password: values.password,
-            passwordConfirmation: values.passwordConfirmation,
-            usuario: values.usuario,
-            admin: values.admin
-        }).then(res =>{
-            if(res){
-                const a = agregaUsuario(values).then(res => console.log(res));
-                console.log(a);
-            }
-        })
-        console.log(values)
-    }
-
-    return (
+  return (
         <div>
             <Navbar user={state} />
             <div className={`container ${style.cuerpo}`}>
@@ -67,10 +66,10 @@ const UserAdmin = () => {
                     initialValues={state}
                     validationSchema={validationSchema}
                     onSubmit={async (values, { resetForm }) => {
-                        await onSubmit(values);
-                        resetForm();
+                      await onSubmit(values)
+                      resetForm()
                     }}>
-                        
+
                     <div className={style.formcontainer}>
                     <div className={`title ${style.subtitle}`}> Crear usuario nuevo:</div>
                         <Form>
@@ -198,10 +197,7 @@ const UserAdmin = () => {
                 </Formik>
             </div>
         </div>
-    )
+  )
 }
-
-
-
 
 export default UserAdmin

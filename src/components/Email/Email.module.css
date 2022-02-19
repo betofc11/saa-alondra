@@ -1,0 +1,30 @@
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 5px;
+}
+
+.boxDestinatarios{
+    background-color: #fff;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 6px;
+    margin-top: 5px;
+    max-width: 800px;
+    overflow: auto;
+    max-height: 200px;
+}
+
+.boxDestinatarios div{
+    background-color: rgb(90, 76, 175);
+    border: dotted 1px rgba(62, 53, 122, 0.342);
+    padding: 7px;
+    font-size: 12px;
+    border-radius: 6px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    color: #fff;
+    box-shadow: 1px 1px 10px rgb(70, 70, 70);
+}

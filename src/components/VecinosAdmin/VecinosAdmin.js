@@ -1,146 +1,157 @@
-import React, { useEffect, useState } from 'react';
-import style from './VecinosAdmin.module.css';
-import * as yup from 'yup';
-import Navbar from '../NavBar/Navbar';
-import { IoPaperPlaneSharp } from "react-icons/io5";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-const { agregaUsuario } = require('../../helpers/usuarios_helper');
-const { getRegions } = require('../../helpers/casas_helper');
+import React, { useEffect, useState } from 'react'
+import style from './VecinosAdmin.module.css'
+import * as yup from 'yup'
+import Navbar from '../NavBar/Navbar'
+import { IoPaperPlaneSharp } from 'react-icons/io5'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { agregaVecino } from '../../helpers/vecinos_helper'
+const { getRegions } = require('../../helpers/casas_helper')
 
 const VecinosAdmin = () => {
+  const [state, setState] = useState({
+    ubicacion: 'Admin vecinos',
+    nombre: '',
+    primerapellido: '',
+    segundoapellido: '',
+    email: '',
+    telefono: '',
+    cedula: '',
+    fallecido: false,
+    trabaja: true,
+    fechanac: new Date(),
+    idcasa: 0,
+    idregion: 0,
+    arrayRegionesCasas: [],
+    arrayRegiones: [],
+    arrayCasas: []
 
-    const [state, setState] = useState({
-        ubicacion: 'Admin vecinos',
-        nombre: '',
-        primerapellido: '',
-        segundoapellido: '',
-        email: '',
-        telefono: '',
-        cedula: '',
-        fallecido: false,
-        trabaja: true,
-        fechanac: new Date(),
-        idcasa: 0,
-        idregion: 2,
-        arrayRegionesCasas: [],
-        arrayRegiones: [],
-        arrayCasas: []
+  })
 
-    });
-
-    const getFormValues = () => {
-        let regiones = [];
-        let casas = [];
-        getRegions().then((res) => {
-            for (let reg in res) {
-                regiones.push({
-                    value: res[reg].idregion,
-                    text: res[reg].nombre
-                });
-                for (let cas in res[reg].casa) {
-                    casas.push({
-                        region: res[reg].idregion,
-                        value: res[reg].casa[cas].idcasa,
-                        text: res[reg].casa[cas].nombre,
-                    })
-                }
-            }
-            setState({
-                ...state,
-                arrayRegionesCasas: res,
-                arrayRegiones: regiones,
-                arrayCasas: casas
-            })
-            console.log(regiones, casas)
-        });
-    }
-
-    useEffect(() => {
-        getFormValues();
-    }, [])
-
-    const validationSchema = yup.object({
-        nombre: yup.string().required('El nombre es necesario'),
-        primerapellido: yup.string().required('El primer apellido es necesario'),
-        segundoapellido: yup.string(),
-        email: yup.string().email('Debe de ser un correo valido'),
-        telefono: yup.string().matches('[0-9]', 'El formato del telefono es incorrecto'),
-        cedula: yup.string().required('La cedula es necesaria').matches('[0-9]', 'El formato de la cedula es incorrecto').length(9, 'La cedula debe de contener 9 digitos'),
-        fallecido: yup.boolean().default(false),
-        trabaja: yup.boolean().default(true),
-        fechanac: yup.date().default(new Date()),
-        regiones: yup.number().min(1, 'Debe elegir una region'),
-        casas: yup.number().min(1, 'Debe elegir una casa'),
-    });
-
-    const renderError = (message) => <p className="alert alert-danger m-2">{message}</p>;
-
-    const onSubmit = async (values) => {
-        validationSchema.isValid({
-            nombre: values.nombre,
-            primerapellido: values.primerapellido,
-            segundoapellido: values.segundoapellido,
-            email: values.email,
-            telefono: values.telefono,
-            cedula: values.cedula,
-            fallecido: values.fallecido,
-            trabaja: values.trabaja,
-            fechanac: values.fechanac,
-            regiones: values.regiones,
-            casas: values.casas,
-        }).then(res => {
-            console.log(res)
+  const getFormValues = () => {
+    const regiones = []
+    const casas = []
+    getRegions().then((res) => {
+      for (const reg in res) {
+        regiones.push({
+          value: res[reg].idregion,
+          text: res[reg].nombre
         })
-        console.log(values)
-    }
-
-    const getListRegions = state.arrayRegiones.map(reg => {
-        return (
-            <option key={reg.value} value={reg.value} >{reg.text}</option>
-        )
-    })
-
-    const getListCasas = state.arrayCasas.map(reg => {
-        if(reg.region === state.idregion){
-            return (
-                <option key={reg.value} value={reg.value} >{reg.text}</option>
-            )
-        }else{
-            return(
-            <option key={reg.value} value={0} disabled>No hay casas en esta region</option>
-            )
+        for (const cas in res[reg].casa) {
+          casas.push({
+            region: res[reg].idregion,
+            value: res[reg].casa[cas].idcasa,
+            text: res[reg].casa[cas].nombre
+          })
         }
-        
+      }
+      setState({
+        ...state,
+        arrayRegionesCasas: res,
+        arrayRegiones: regiones,
+        arrayCasas: casas
+      })
+      console.log(regiones, casas)
     })
-    
+  }
 
-    const onChangeRegion = (value) => {
-        setState({
-            ...state,
-            idregion: parseInt(value.target.value)
-        })
+  useEffect(() => {
+    getFormValues()
+  }, [])
 
+  const validationSchema = yup.object({
+    nombre: yup.string().required('El nombre es necesario'),
+    primerapellido: yup.string().required('El primer apellido es necesario'),
+    segundoapellido: yup.string(),
+    email: yup.string().email('Debe de ser un correo valido'),
+    telefono: yup.string().matches('[0-9]', 'El formato del telefono es incorrecto'),
+    cedula: yup.string().required('La cedula es necesaria').matches('[0-9]', 'El formato de la cedula es incorrecto').length(9, 'La cedula debe de contener 9 digitos'),
+    fallecido: yup.boolean().default(false),
+    trabaja: yup.boolean().default(true),
+    fechanac: yup.date().default(new Date()),
+    regiones: yup.number().min(1, 'Debe elegir una region'),
+    casas: yup.number().min(1, 'Debe elegir una casa')
+  })
+
+  const renderError = (message) => <p className="alert alert-danger m-2">{message}</p>
+
+  const onSubmit = async (values) => {
+    const a = values.fechanac.toISOString()
+    console.log(a)
+    const val = {
+      nombre: values.nombre,
+      primerapellido: values.primerapellido,
+      segundoapellido: values.segundoapellido,
+      email: values.email,
+      telefono: values.telefono,
+      cedula: values.cedula,
+      fallecido: values.fallecido,
+      trabaja: values.trabaja,
+      fechanac: a,
+      idcasa: state.idcasa,
+      idregion: state.idregion
     }
+    validationSchema.isValid(val).then(res => {
+      agregaVecino(val).then(res => {
+        console.log(res)
+      })
+    })
+  }
 
-    const renderCasasInput = () => {
-        if(state.idregion > 0){
-            console.log(state)
-            return (
+  const getListRegions = state.arrayRegiones.map(reg => {
+    return (
+            <option key={reg.value} value={reg.value} >{reg.text}</option>
+    )
+  })
+
+  const getListCasas = state.arrayCasas.map(reg => {
+    if (reg.region === state.idregion) {
+      return (
+                <option key={reg.value} value={reg.value} >{reg.text}</option>
+      )
+    } else {
+      return (
+            <option key={reg.value} value={0} disabled>No hay casas en esta region</option>
+      )
+    }
+  })
+
+  const onChangeRegion = (value) => {
+    setState({
+      ...state,
+      idregion: parseInt(value.target.value),
+      idcasa: 0
+    })
+    console.log(state.idregion)
+  }
+
+  const onChangeCasa = (value) => {
+    setState({
+      ...state,
+      idcasa: parseInt(value.target.value)
+    })
+    console.log(value.target.value)
+  }
+
+  const renderCasasInput = () => {
+    if (state.idregion > 0) {
+      console.log(state)
+      return (
                 <Field
-            name="casas"
+            name="idcasa"
             as="select"
-            id="casas"
+            id="idcasa"
             className="form-select form-select-lg"
+            onChange={onChangeCasa}
         >
-            <option value="0" defaultValue disabled>Selecciona casa(Selecciona primero region):</option>
+            <option value="0" defaultValue>Selecciona casa(Selecciona primero region):</option>
             {getListCasas}
         </Field>
-            )
-        }else{
-            console.log(state)
-            return(
+      )
+    } else {
+      console.log(state)
+      return (
                 <Field
                 name="casas"
                 as="select"
@@ -150,13 +161,11 @@ const VecinosAdmin = () => {
             >
                 <option value="0" >Selecciona casa(Selecciona primero region):</option>
             </Field>
-            )
-        }
-        
-            
+      )
     }
+  }
 
-    return (
+  return (
         <div>
             <Navbar user={state} />
             <div className={`container ${style.cuerpo}`}>
@@ -164,8 +173,8 @@ const VecinosAdmin = () => {
                     initialValues={state}
                     validationSchema={validationSchema}
                     onSubmit={async (values, { resetForm }) => {
-                        await onSubmit(values);
-                        resetForm();
+                      await onSubmit(values)
+                      resetForm()
                     }}>
 
                     <div className={style.formcontainer}>
@@ -229,7 +238,33 @@ const VecinosAdmin = () => {
                                         <ErrorMessage name="cedula" render={renderError} />
                                     </div>
 
-                                    <div className="form-group m-1">
+                                    <div className={`m-1 ${style.campos}`}>
+                                    <label htmlFor="fechanac">
+                                        Fecha de nacimiento(*):
+                                    </label>
+                                        <DatePicker
+                                        name="fechanac"
+                                        id='fechanac'
+                                        selected={ state.fechanac }
+                                        onChange={(date) => {
+                                          setState({
+                                            ...state,
+                                            fechanac: date
+                                          })
+                                          console.log(date, state.fechanac)
+                                        }}
+                                        dateFormat={'dd/MM/yyyy'}
+                                        className={'form-control'}
+                                        placeholder="Fecha de nacimiento"
+                                        />
+
+                                        <ErrorMessage name="fechanac" render={renderError} />
+                                    </div>
+
+                                </div>
+                                <div className={`${style.formdivisor}`}>
+
+                                <div className="form-group m-1">
                                         <Field
                                             name="regiones"
                                             as="select"
@@ -240,6 +275,7 @@ const VecinosAdmin = () => {
                                         >
                                             <option value="0">Selecciona region:</option>
                                             {getListRegions}
+
                                         </Field>
                                         <ErrorMessage name="regiones" render={renderError} />
                                     </div>
@@ -248,7 +284,7 @@ const VecinosAdmin = () => {
                                         {
                                             renderCasasInput()
                                         }
-                                        <ErrorMessage name="casas" render={renderError} />
+                                        <ErrorMessage name="idcasa" render={renderError} />
                                     </div>
 
                                     <div className="form-floating m-1">
@@ -264,8 +300,6 @@ const VecinosAdmin = () => {
                                         </label>
                                         <ErrorMessage name="telefono" render={renderError} />
                                     </div>
-                                </div>
-                                <div className={`${style.formdivisor}`}>
                                     <div className="form-floating m-1">
                                         <Field
                                             name="email"
@@ -280,12 +314,12 @@ const VecinosAdmin = () => {
                                         <ErrorMessage name="email" render={renderError} />
                                     </div>
 
-                                    <div className="form-check form-switch m-1">
+                                    <div className={`form-check form-switch m-1 p-2 ${style.campos}`}>
                                         <Field
                                             name="fallecido"
                                             type="checkbox"
                                             id="fallecido"
-                                            className="form-check-input"
+                                            className="form-check-input ms-0"
                                         />
                                         <label htmlFor="fallecido" className="form-check-label">
                                         Fallecido(*):
@@ -293,33 +327,17 @@ const VecinosAdmin = () => {
                                         <ErrorMessage name="fallecido" render={renderError} />
                                     </div>
 
-                                    <div className="form-check form-switch m-1">
+                                    <div className={`form-check form-switch p-2 m-1 ${style.campos}`}>
                                         <Field
                                             name="trabaja"
                                             type="checkbox"
                                             id="trabaja"
-                                            className="form-check-input"
+                                            className="form-check-input ms-0"
                                         />
                                         <label htmlFor="trabaja" className="form-check-label">
                                         Trabaja(*):
                                     </label>
                                         <ErrorMessage name="fallecido" render={renderError} />
-                                    </div>
-
-                                    <div className=" m-1">
-                                    <label htmlFor="fechanac">
-                                        Fecha de nacimiento(*):
-                                    </label>
-                                        <DatePicker 
-                                        name="fechanac"
-                                        id='fechanac'
-                                        type="date"
-                                        selected={ state.fechanac }
-                                        className={`form-control`}
-                                        placeholder="Fecha de nacimiento"
-                                        />
-                                        
-                                        <ErrorMessage name="fechanac" render={renderError} />
                                     </div>
                                 </div>
                             </div>
@@ -331,10 +349,7 @@ const VecinosAdmin = () => {
                 </Formik>
             </div>
         </div>
-    )
+  )
 }
-
-
-
 
 export default VecinosAdmin
