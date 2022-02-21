@@ -8,40 +8,87 @@ const Email = () => {
   const [state, setState] = useState({
     ubicacion: 'Email',
     destinatarios: '',
-    arrayDestinatarios: ['beto70165304@gmail.com', 'beto70165304@gmail.com', 'beto70165304@gmail.com', 'beto70165304@gmail.com', 'beto70165304@gmail.com', 'beto70165304@gmail.com', 'beto70165304@gmail.com', 'beto70165304@gmail.com', 'beto70165304@gmail.com', 'beto70165304@gmail.com', 'beto70165304@gmail.com', 'beto70165304@gmail.com', 'beto70165304@gmail.com', 'betoamsterdamxd@gmail.com'],
+    arrayDestinatarios: [],
     mensaje: '',
     asunto: ''
   })
 
   const validationSchema = yup.object({
-    destinatarios: yup.string().email('Formato de email incorrecto').required('Necesita ingresar los destinatarios'),
     mensaje: yup.string().required('Ingrese un mensaje'),
     asunto: yup.string().required('Ingrese un asunto')
   })
 
-  const onSubmit = async () => {
+  const validationD = yup.object({
+    destinatarios: yup.string().email('Formato de email incorrecto')
+  })
 
+  const onSubmit = async (values) => {
+
+  }
+
+  const onAddDestinatarios = async (values) => {
+    console.log(values.destinatarios)
+    validationD.isValid({ destinatarios: values.destinatarios }).then(res => {
+      const val = state.arrayDestinatarios
+      console.log(val)
+      val.push(values.destinatarios)
+      console.log(val)
+      setState({
+        ...state
+      })
+      console.log(state)
+    })
+  }
+
+  const rendDest = () => {
+    if (state.arrayDestinatarios.length > 0) {
+      return (
+        <div className= {styles.boxDestinatarios}>
+          { boxDestinatarios() }
+        </div>
+      )
+    }
   }
 
   const boxDestinatarios = () => {
     const destinatarios = state.arrayDestinatarios
-    const a = destinatarios.map((correo) => {
-      return (
-      <div key ={correo}>{correo}</div>
-      )
-    })
+    let a
+    if (state.arrayDestinatarios.length > 0) {
+      a = destinatarios.map((correo, index) => {
+        return (
+      <div key ={index}>{correo}</div>
+        )
+      })
+    } else {
+      a = (<span></span>)
+    }
     return a
-  }
-
-  const onChangeDest = (a) => {
-    a.preventDefault()
-    console.log(a.target.value)
   }
 
   return (
     <div>
     <Navbar user={state} />
             <div className={`container ${styles.container}`}>
+                <Formik
+                initialValues={state}
+                validationSchema={validationD}
+                validator={() => {}}
+                onSubmit={
+                     async (values, { resetForm }) => {
+                       await onAddDestinatarios(values)
+                       resetForm()
+                     }
+                  }>
+                    <Form>
+                      <Field
+                        name = 'destinatarios'
+                        type = 'text'
+                        id = 'destinatarios'
+                        className = 'form-control w-100'
+                        placeholder = 'Destinatarios'>
+                      </Field>
+                    </Form>
+                </Formik>
                 <Formik
                 initialValues={state}
                 validationSchema={validationSchema}
@@ -52,17 +99,9 @@ const Email = () => {
                     }
                 }>
                     <Form>
-                        <Field
-                        name = 'destinatarios'
-                        type = 'text'
-                        id = 'destinatarios'
-                        className = 'form-control'
-                        onChangeText={ onChangeDest }
-                        placeholder = 'Destinatarios'>
-                        </Field>
-                        <div className= {styles.boxDestinatarios}>
-                          { boxDestinatarios() }
-                        </div>
+                        {
+                          rendDest()
+                        }
                         <Field
                         name = 'asunto'
                         type = 'text'
