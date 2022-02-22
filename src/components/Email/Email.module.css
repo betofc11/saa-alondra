@@ -28,3 +28,19 @@
     color: #fff;
     box-shadow: 1px 1px 10px rgb(70, 70, 70);
 }
+
+.btnDelete{
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 17px;
+    background-color: rgb(90, 76, 175);
+    border: none;
+    padding: 0;
+    color: #fff;
+}
+
+.btnDelete:hover, .btnDelete:active, .btnDelete:after{
+    background-color: rgba(62, 53, 122, 0.342);
+    color: #fff;
+}

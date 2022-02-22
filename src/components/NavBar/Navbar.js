@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom'
 import Loader from '../Utilities/Loader'
 import style from './Navbar.module.css'
 const { React, useState } = require('react')
-const { IoLogoOctocat, IoPizzaOutline, IoRocketSharp, IoPower } = require('react-icons/io5')
+const { IoRocketSharp, IoPower } = require('react-icons/io5')
 const { verifyLogged } = require('../../helpers/token_helper')
 
 const Navbar = (user) => {
