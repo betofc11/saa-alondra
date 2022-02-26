@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, NavLink } from 'react-router-dom'
 import Navbar from '../NavBar/Navbar'
+import { IoMail } from 'react-icons/io5'
 import DataTable from 'react-data-table-component'
 import styles from './Regiones.module.css'
 import { getRegionById } from '../../services/regionesServices'
@@ -12,7 +13,8 @@ const Regiones = () => {
     idregion: 0,
     nombre: '',
     vecinos: [],
-    ubicacion: 'Regiones'
+    ubicacion: 'Regiones',
+    emails: []
   })
 
   const [pending, setPending] = useState(true)
@@ -77,10 +79,18 @@ const Regiones = () => {
   useEffect(() => {
     getRegionById(parseInt(id)).then((res) => {
       const resjson = JSON.parse(res)
+      const emails = []
+
+      for (const email of resjson.vecinos) {
+        if (email.email) {
+          emails.push(email.email)
+        }
+      }
       setRegion({
         idregion: resjson.idregion,
         nombre: resjson.nombre,
-        vecinos: resjson.vecinos
+        vecinos: resjson.vecinos,
+        emails: emails
       })
       setPending(false)
     }).catch((err) => {
@@ -91,17 +101,18 @@ const Regiones = () => {
         <div>
             <Navbar user={region} />
             <div className={'container ' + styles.cuerpo}>
-                <DataTable
-                theme={'dark'}
-                title={`Region de ${region.nombre}`}
-                columns={columns}
-                data={region.vecinos}
-                pointerOnHover={true}
-                progressPending={pending}
-                highlightOnHover={true}
-                response={true}
-                pagination
-                />
+              <NavLink to={`/email/${id}`} className={styles.link}>ENVIAR CORREO <IoMail/></NavLink>
+              <DataTable
+              theme={'dark'}
+              title={`Region de ${region.nombre}`}
+              columns={columns}
+              data={region.vecinos}
+              pointerOnHover={true}
+              progressPending={pending}
+              highlightOnHover={true}
+              response={true}
+              pagination
+              />
             </div>
         </div>
   )

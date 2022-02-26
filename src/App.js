@@ -22,6 +22,7 @@ const App = () => {
           <Route path='/adminusuarios' element={<UserAdmin/>} />
           <Route path='/adminvecinos' element={<VecinosAdmin/>} />
           <Route path='/email' element={<Email/>} />
+          <Route path='/email/:region' element={<Email/>} />
           <Route path='*' element='/'/>
         </Routes>
       </Router>
