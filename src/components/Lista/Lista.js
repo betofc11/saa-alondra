@@ -40,7 +40,17 @@ class Lista extends Component {
         res ? console.log('ESTA LOGUEADO') : this.setState({ islogged: res })
         if (this.state.regiones.length === 0) {
           getRegions().then((res) => {
-            this.setState({ regiones: JSON.parse(res), loader: false })
+            const all = {
+              idregion: 0,
+              nombre: 'Todas',
+              casa: []
+            }
+            const regionesP = []
+            regionesP.push(all)
+            for (const a of JSON.parse(res)) {
+              regionesP.push(a)
+            }
+            this.setState({ regiones: regionesP, loader: false })
             console.log(res)
           })
         };

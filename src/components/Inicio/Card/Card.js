@@ -29,21 +29,21 @@ const Card = (opciones) => {
   }
 
   return (
-        <NavLink to={`/${opciones.opciones.link}`} onClick={loader} className={styles.link}>
-            <div className={'card ' + styles.card}>
+    <NavLink to={`/${opciones.opciones.link}`} onClick={loader} className={styles.link}>
+        <div className={'card ' + styles.card}>
+            {
+                load ? <Loader /> : <div></div>
+            }
+            <div className={'card-body '}>
                 {
-                    load ? <Loader /> : <div></div>
+                    getLogo(opciones.opciones.logo)
                 }
-                <div className={'card-body '}>
-                    {
-                        getLogo(opciones.opciones.logo)
-                    }
-                </div>
-                <div className={'card-footer ' + styles.cardtexto}>
-                    {opciones.opciones.nombre}
-                </div>
             </div>
-        </NavLink>
+            <div className={'card-footer ' + styles.cardtexto}>
+                {opciones.opciones.nombre}
+            </div>
+        </div>
+    </NavLink>
   )
 }
 

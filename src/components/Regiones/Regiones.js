@@ -4,7 +4,7 @@ import Navbar from '../NavBar/Navbar'
 import { IoMail } from 'react-icons/io5'
 import DataTable from 'react-data-table-component'
 import styles from './Regiones.module.css'
-import { getRegionById } from '../../services/regionesServices'
+import { getRegionById, getRegions, getRegVec } from '../../services/regionesServices'
 
 const Regiones = () => {
   const { id } = useParams()
@@ -77,44 +77,76 @@ const Regiones = () => {
   ]
 
   useEffect(() => {
-    getRegionById(parseInt(id)).then((res) => {
-      const resjson = JSON.parse(res)
-      const emails = []
-
-      for (const email of resjson.vecinos) {
-        if (email.email) {
-          emails.push(email.email)
+    if (id > 0) {
+      getRegionById(parseInt(id)).then((res) => {
+        const resjson = JSON.parse(res)
+        console.log(resjson)
+        const emails = []
+        const vecinos = []
+        for (const vecino of resjson.vecinos) {
+          if (vecino.email) {
+            emails.push(vecino.email)
+          }
+          vecinos.push({
+            ...vecino,
+            fallecido: vecino.fallecido ? 'SI' : 'NO',
+            trabaja: vecino.trabaja ? 'SI' : 'NO'
+          })
         }
-      }
-      setRegion({
-        idregion: resjson.idregion,
-        nombre: resjson.nombre,
-        vecinos: resjson.vecinos,
-        emails: emails
+        setRegion({
+          idregion: resjson.idregion,
+          nombre: resjson.nombre,
+          vecinos: vecinos,
+          emails: emails
+        })
+        setPending(false)
+      }).catch((err) => {
+        console.error(err)
       })
-      setPending(false)
-    }).catch((err) => {
-      console.error(err)
-    })
+    } else {
+      getRegVec().then(res => {
+        const resjson = JSON.parse(res)
+        console.log(resjson)
+        const emails = []
+        const vecinos = []
+        for (const vecino of resjson.vecinos) {
+          if (vecino.email) {
+            emails.push(vecino.email)
+          }
+          vecinos.push({
+            ...vecino,
+            fallecido: vecino.fallecido ? 'SI' : 'NO',
+            trabaja: vecino.trabaja ? 'SI' : 'NO'
+          })
+        }
+        setRegion({
+          idregion: resjson.idregion,
+          nombre: resjson.nombre,
+          vecinos: vecinos,
+          emails: emails
+        })
+        setPending(false)
+      })
+    }
   }, [])
   return (
-        <div>
-            <Navbar user={region} />
-            <div className={'container ' + styles.cuerpo}>
-              <NavLink to={`/email/${id}`} className={styles.link}>ENVIAR CORREO <IoMail/></NavLink>
-              <DataTable
-              theme={'dark'}
-              title={`Region de ${region.nombre}`}
-              columns={columns}
-              data={region.vecinos}
-              pointerOnHover={true}
-              progressPending={pending}
-              highlightOnHover={true}
-              response={true}
-              pagination
-              />
-            </div>
+    <div>
+        <Navbar user={region} />
+        <div className={'container ' + styles.cuerpo}>
+          <NavLink to={`/email/${id}`} className={styles.link}>ENVIAR CORREO <IoMail/></NavLink>
+          <DataTable
+          theme={'dark'}
+          title={`${region.nombre}`}
+          columns={columns}
+          data={region.vecinos}
+          pointerOnHover={true}
+          progressPending={pending}
+          highlightOnHover={true}
+          response={true}
+          pagination
+          />
         </div>
+    </div>
   )
 }
 

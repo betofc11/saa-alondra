@@ -9,7 +9,7 @@ import * as yup from 'yup'
 import { getRegionById } from '../../services/regionesServices'
 const { sendEmail } = require('../../helpers/email_helper')
 
-const Email = (props) => {
+const Email = () => {
   const [state, setState] = useState({
     ubicacion: 'Email',
     destinatarios: '',
@@ -23,8 +23,7 @@ const Email = (props) => {
 
   const validationSchema = yup.object({
     mensaje: yup.string().required('Ingrese un mensaje'),
-    asunto: yup.string().required('Ingrese un asunto'),
-    destinatariosF: yup.string().required('Ingrese al menos un destinatario')
+    asunto: yup.string().required('Ingrese un asunto')
   })
 
   const validationD = yup.object({
@@ -55,10 +54,6 @@ const Email = (props) => {
   }, [])
 
   const onSubmit = async (values) => {
-    setState({
-      ...state,
-      loader: true
-    })
     const data = {
       to: state.destinatariosF,
       subject: values.asunto,
@@ -66,10 +61,8 @@ const Email = (props) => {
     }
     sendEmail(data).then(res => {
       console.log(res)
-    })
-    setState({
-      ...state,
-      loader: false
+    }).catch(err => {
+      console.log(err)
     })
   }
 
@@ -180,6 +173,11 @@ const Email = (props) => {
             onSubmit={
                 async (values, { resetForm }) => {
                   await onSubmit(values)
+                  setState({
+                    ...state,
+                    arrayDestinatarios: [],
+                    destinatariosF: ''
+                  })
                   resetForm()
                 }
           }>
