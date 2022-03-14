@@ -1,7 +1,7 @@
 .cuerpo{
-    background-color: #424242;
-    border-radius: 12px;
-    margin-top: 20px
+  background-color: #424242;
+  border-radius: 12px;
+  margin-top: 20px
 }
 
 
@@ -110,4 +110,8 @@
 .link:disabled {
   cursor: default;
   opacity: .24;
+}
+
+.containerExp{
+  margin: 10px;
 }

@@ -61,7 +61,7 @@ a{
 }
 
 .burgerDisp{
-    display: flex;
+    display: none;
     right: -700px;
     flex-direction: column;
     top: 83px;
@@ -87,6 +87,9 @@ a{
         display: none;
     }
     .mobile{
+        display: flex;
+    }
+    .burgerDisp{
         display: flex;
     }
 }

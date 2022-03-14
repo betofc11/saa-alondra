@@ -86,23 +86,23 @@ class Lista extends Component {
   render () {
     return this.state.islogged
       ? (
-            <div>
-                <Navbar user={this.state} />
-                <div className={'container ' + style.cuerpo}>
-                    {
-                        this.state.loader ? <Loader /> : <span></span>
-                    }
-                    <div className={style.grupo}>
-                        {
-                            this.state.regiones.map((region) => {
-                              return (
-                                    <Card key={region.idregion} region={region} />
-                              )
-                            })
-                        }
-                    </div>
-                </div>
+          <div>
+            <Navbar user={this.state} />
+            <div className={'container ' + style.cuerpo}>
+              {
+                  this.state.loader ? <Loader /> : <span></span>
+              }
+              <div className={style.grupo}>
+                {
+                  this.state.regiones.map((region) => {
+                    return (
+                      <Card key={region.idregion} region={region} />
+                    )
+                  })
+                }
+              </div>
             </div>
+          </div>
         )
       : <Navigate to="/login" />
   }

@@ -3,6 +3,7 @@ import './Login.css'
 import { Navigate } from 'react-router-dom'
 import { verifyLogged } from '../../helpers/token_helper'
 import Loader from '../Utilities/Loader'
+import Logo from '../../assets/img/ADI_La_Alondra.jpg'
 const config = require('../../config.json')
 const axios = require('axios')
 
@@ -61,33 +62,34 @@ class Login extends Component {
       return !this.state.islogged
         ? (
             <div className="container h-100">
-                {
-                    this.state.loader ? <Loader /> : <div></div>
-                }
-                <div>
-                    <h1 className="title">SAA Alondra</h1>
-                </div>
-                <div className="card">
-                    <form onSubmit={this.submitHandler}>
-                        <h2 className="card-header">Iniciar sesion</h2>
-                        <div className="card-body">
-                            <div className="">
-                                <input type="text" name="user" className="form-control" placeholder="Usuario" autoComplete="username"/>
-                                <input type="password" name="pass" className="form-control" placeholder="Contraseña" autoComplete="current-password"/>
-                            </div>
-                        </div>
+              {
+                this.state.loader ? <Loader /> : <div></div>
+              }
+              <div>
+                <img src={ Logo } className="logo-login"/>
+                <h1 className="title">SAA Alondra</h1>
+              </div>
+              <div className="card">
+                <form onSubmit={this.submitHandler}>
+                  <h2 className="card-header">Iniciar sesion</h2>
+                  <div className="card-body">
+                    <div className="">
+                      <input type="text" name="user" className="form-control" placeholder="Usuario" autoComplete="username"/>
+                      <input type="password" name="pass" className="form-control" placeholder="Contraseña" autoComplete="current-password"/>
+                    </div>
+                  </div>
 
                 {
-                    this.state.error
-                      ? <div className={'alert alert-danger mx-3'}>
-                        Credenciales incorrectas
-                    </div>
-                      : <p></p>
+                  this.state.error
+                    ? <div className={'alert alert-danger mx-3'}>
+                      Credenciales incorrectas
+                  </div>
+                    : <p></p>
                 }
-                        <div className="card-footer">
-                            <button type="submit" className="btn btn-success"> INICIAR SESION</button>
-                        </div>
-                    </form>
+                    <div className="card-footer">
+                      <button type="submit" className="btn btn-success"> INICIAR SESION</button>
+                    </div>
+                  </form>
                 </div>
             </div>
           )

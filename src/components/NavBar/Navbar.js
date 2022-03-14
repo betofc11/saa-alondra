@@ -1,8 +1,7 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { Navigate, NavLink } from 'react-router-dom'
 import Loader from '../Utilities/Loader'
 import style from './Navbar.module.css'
-import { slide as MenuSlide } from 'react-burger-menu'
 const { React, useState } = require('react')
 const { IoRocketSharp, IoPower, IoMenu, IoClose } = require('react-icons/io5')
 const { verifyLogged } = require('../../helpers/token_helper')

@@ -34,3 +34,11 @@
 .form-control{
     margin: 7px 0 0 0;
 }
+
+.logo-login{
+    max-width: 175px;
+    height: auto;
+    border-radius: 75px;
+    border: dotted 1px #000;
+    box-shadow: 3px 3px 15px 1px rgb(0, 0, 0);
+}

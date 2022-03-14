@@ -132,7 +132,7 @@ const Regiones = () => {
   return (
     <div>
         <Navbar user={region} />
-        <div className={'container ' + styles.cuerpo}>
+        <div className={`container ${styles.cuerpo}`}>
           <NavLink to={`/email/${id}`} className={styles.link}>ENVIAR CORREO <IoMail/></NavLink>
           <DataTable
           theme={'dark'}
@@ -143,9 +143,25 @@ const Regiones = () => {
           progressPending={pending}
           highlightOnHover={true}
           response={true}
+          expandableRowsComponent = {ExpRow}
+          expandableRowsComponentProps = {region.vecinos}
+          expandableRows
           pagination
           />
         </div>
+    </div>
+  )
+}
+
+const ExpRow = (prop) => {
+  useEffect(() => {
+    console.log(prop.data)
+  })
+  return (
+    <div className={ `container ${styles.containerExp}` } >
+      {
+        prop.data.nombre
+      }
     </div>
   )
 }
