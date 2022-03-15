@@ -113,5 +113,29 @@
 }
 
 .containerExp{
-  margin: 10px;
+  display: flex;
+  margin: 10px 15px;
+  padding: 5px 3px;
+  text-align: left;
+}
+
+li {
+  list-style: '👽';
+  padding: 2px;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.btns {
+  margin: 12px;
+  border-radius: 30px;
+  padding: 8px 18px;
+  box-shadow: 0 20px 15px -17px rgb(0, 0, 0);
+}
+.tag{
+  font-weight: bold;
 }

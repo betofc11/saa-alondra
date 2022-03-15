@@ -4,7 +4,8 @@ module.exports = {
     es2021: true,
     node: true,
     es6: true,
-    commonjs: true
+    commonjs: true,
+    'jest/globals': true
   },
   parser: 'babel-eslint',
   extends: [
@@ -19,7 +20,8 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: [
-    'react'
+    'react',
+    'jest'
   ],
   rules: {
     'react/react-in-jsx-scope': 'off',

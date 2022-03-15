@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, NavLink } from 'react-router-dom'
 import Navbar from '../NavBar/Navbar'
-import { IoMail } from 'react-icons/io5'
+import { IoMail, IoTrash, IoCreate } from 'react-icons/io5'
 import DataTable from 'react-data-table-component'
 import styles from './Regiones.module.css'
 import { getRegionById, getRegions, getRegVec } from '../../services/regionesServices'
@@ -23,6 +23,7 @@ const Regiones = () => {
     {
       name: 'ID Casa',
       selector: row => row.idcasa,
+      wrap: true,
       sortable: true
     },
     {
@@ -158,10 +159,22 @@ const ExpRow = (prop) => {
     console.log(prop.data)
   })
   return (
-    <div className={ `container ${styles.containerExp}` } >
-      {
-        prop.data.nombre
-      }
+    <div className={ `${styles.containerExp}` } >
+      <div className="d-flex flex-column col-6">
+        <h3 className="text-center mb-3">Datos</h3>
+        <ul>
+          <li><span className={`${styles.tag}`}>Nombre:</span> { prop.data.nombre }</li>
+          <li><span className={`${styles.tag}`}>Apellidos:</span> { prop.data.primerapellido } { prop.data.segundoapellido }</li>
+          <li><span className={`${styles.tag}`}>Cedula:</span> { prop.data.cedula }</li>
+          <li><span className={`${styles.tag}`}>ID Cedula:</span> { prop.data.idcasa }</li>
+          <li><span className={`${styles.tag}`}>E-mail:</span> { prop.data.email }</li>
+          <li><span className={`${styles.tag}`}>Telefono:</span> { prop.data.telefono }</li>
+        </ul>
+      </div>
+      <div className={ `${styles.btnContainer}` }>
+        <button className={`btn btn-primary ${styles.btns}`}><IoCreate /> Modificar</button>
+        <button className={`btn btn-danger ${styles.btns}`}><IoTrash /> Eliminar</button>
+      </div>
     </div>
   )
 }
