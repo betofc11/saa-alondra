@@ -50,12 +50,14 @@ const Regiones = () => {
       name: 'Telefono',
       selector: row => row.telefono,
       grow: 2,
-      right: true
+      right: true,
+      hide: 'md'
     },
     {
       name: 'Email',
       selector: row => row.email,
-      grow: 4
+      grow: 4,
+      hide: 'md'
     },
     {
       name: 'Fecha de nacimiento',
