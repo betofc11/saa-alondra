@@ -8,6 +8,7 @@ import Inicio from './components/Inicio/Inicio'
 import UserAdmin from './components/UserAdmin/UserAdmin'
 import VecinosAdmin from './components/VecinosAdmin/VecinosAdmin'
 import Email from './components/Email/Email'
+import VecinosEdit from './components/VecinosAdmin/VecinosEdit/VecinosEdit'
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='/lista' element={<Lista/>} />
           <Route path='/adminusuarios' element={<UserAdmin/>} />
           <Route path='/adminvecinos' element={<VecinosAdmin/>} />
+          <Route path='/adminvecinos/:id' element={<VecinosEdit/>} />
           <Route path='/email' element={<Email/>} />
           <Route path='/email/:region' element={<Email/>} />
           <Route path='*' element='/'/>

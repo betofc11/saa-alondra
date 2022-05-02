@@ -6,7 +6,6 @@ import Card from './Card/Card'
 import Navbar from '../NavBar/Navbar'
 import Loader from '../Utilities/Loader'
 const { verifyLogged } = require('../../helpers/token_helper')
-const axios = require('axios')
 
 class Lista extends Component {
   constructor () {

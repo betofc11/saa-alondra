@@ -51,6 +51,10 @@
   .link {
     padding: 19px 32px;
   }
+  .btnContainer{
+    display: flex;
+    align-self: flex-end;
+  }
 }
 
 .link:before,

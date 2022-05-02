@@ -134,10 +134,10 @@ const Regiones = () => {
   }, [])
   return (
     <div>
-        <Navbar user={region} />
-        <div className={`container ${styles.cuerpo}`}>
-          <NavLink to={`/email/${id}`} className={styles.link}>ENVIAR CORREO <IoMail/></NavLink>
-          <DataTable
+      <Navbar user={region} />
+      <div className={`container ${styles.cuerpo}`}>
+        <NavLink to={`/email/${id}`} className={styles.link}>ENVIAR CORREO <IoMail/></NavLink>
+        <DataTable
           theme={'dark'}
           title={`${region.nombre}`}
           columns={columns}
@@ -150,32 +150,32 @@ const Regiones = () => {
           expandableRowsComponentProps = {region.vecinos}
           expandableRows
           pagination
-          />
-        </div>
+        />
+      </div>
     </div>
   )
 }
 
-const ExpRow = (prop) => {
+const ExpRow = ({ data }) => {
   useEffect(() => {
-    console.log(prop.data)
+    console.log(data)
   })
   return (
     <div className={ `${styles.containerExp}` } >
       <div className="d-flex flex-column col-6">
         <h3 className="text-center mb-3">Datos</h3>
         <ul>
-          <li><span className={`${styles.tag}`}>Nombre:</span> { prop.data.nombre }</li>
-          <li><span className={`${styles.tag}`}>Apellidos:</span> { prop.data.primerapellido } { prop.data.segundoapellido }</li>
-          <li><span className={`${styles.tag}`}>Cedula:</span> { prop.data.cedula }</li>
-          <li><span className={`${styles.tag}`}>ID Cedula:</span> { prop.data.idcasa }</li>
-          <li><span className={`${styles.tag}`}>E-mail:</span> { prop.data.email }</li>
-          <li><span className={`${styles.tag}`}>Telefono:</span> { prop.data.telefono }</li>
+          <li><span className={`${styles.tag}`}>Nombre:</span> { data.nombre }</li>
+          <li><span className={`${styles.tag}`}>Apellidos:</span> { data.primerapellido } { data.segundoapellido }</li>
+          <li><span className={`${styles.tag}`}>Cedula:</span> { data.cedula }</li>
+          <li><span className={`${styles.tag}`}>ID Casa:</span> { data.idcasa }</li>
+          <li><span className={`${styles.tag}`}>E-mail:</span> { data.email }</li>
+          <li><span className={`${styles.tag}`}>Telefono:</span> { data.telefono }</li>
         </ul>
       </div>
       <div className={ `${styles.btnContainer}` }>
-        <button className={`btn btn-primary ${styles.btns}`}><IoCreate /> Modificar</button>
-        <button className={`btn btn-danger ${styles.btns}`}><IoTrash /> Eliminar</button>
+        <NavLink to={`/adminvecinos/${data.idvecino}`} className={`btn btn-primary ${styles.btns}`}><IoCreate /> Modificar</NavLink>
+        <NavLink to={`/adminvecinos/${data.idvecino}`} className={`btn btn-danger ${styles.btns}`}><IoTrash /> Eliminar</NavLink>
       </div>
     </div>
   )

@@ -1,6 +1,8 @@
 const config = require('../config.json')
 const axios = require('axios')
 
+const getBool = (val) => { return val ? 1 : 0 }
+
 const agregaVecino = async (values) => {
   try {
     const token = JSON.parse(localStorage.getItem('usuarioLogged')).token
@@ -12,8 +14,8 @@ const agregaVecino = async (values) => {
       telefono: values.telefono,
       cedula: values.cedula,
       idcasa: values.idcasa,
-      trabaja: values.trabaja ? 1 : 0,
-      fallecido: values.fallecido ? 1 : 0,
+      trabaja: getBool(values.trabaja),
+      fallecido: getBool(values.fallecido),
       fechanac: values.fechanac
     }
     console.log(bodyParameters)
